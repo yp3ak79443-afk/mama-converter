@@ -1,0 +1,170 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#ff5a35">
+<title>媽媽好難｜蝦皮分潤快速轉換器 V3</title>
+<meta name="description" content="媽媽好難｜蝦皮分潤連結快速整理工具">
+<style>
+*{box-sizing:border-box}
+:root{--a:#ff5935;--a2:#ff835f;--bg:#f6f7f9;--text:#222;--muted:#777}
+body{margin:0;background:linear-gradient(180deg,#fff7f3 0,#f8f9fa 52%,#f3f4f6);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Noto Sans TC","PingFang TC","Microsoft JhengHei",sans-serif;color:var(--text)}
+.wrap{max-width:760px;margin:auto;padding:24px 14px 50px}
+.brand{text-align:center;margin:5px 0 20px}.logo{width:68px;height:68px;margin:auto;border-radius:21px;background:linear-gradient(135deg,var(--a),var(--a2));color:#fff;display:flex;align-items:center;justify-content:center;font-size:32px;font-weight:900;box-shadow:0 10px 28px #ff59352b}
+h1{font-size:29px;margin:10px 0 4px}.sub{margin:0;color:var(--muted);font-size:14px}
+.card{background:#fff;border:1px solid #00000008;border-radius:22px;padding:20px;box-shadow:0 14px 38px #0000000b}
+label{display:block;font-weight:800;margin-bottom:9px}
+textarea,input{width:100%;font:inherit;border:1px solid #e5e5e5;border-radius:14px;padding:13px;outline:0;background:#fff}
+textarea{min-height:175px;resize:vertical;line-height:1.6}
+textarea:focus,input:focus{border-color:var(--a);box-shadow:0 0 0 4px #ff59351a}
+.hint{font-size:12px;color:#888;margin:8px 2px 14px}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:14px}
+.small label{font-size:13px}.small input{height:45px}
+.actions{display:flex;gap:9px}.btn{border:0;border-radius:13px;padding:13px 15px;font:inherit;font-weight:800;cursor:pointer}
+.primary{background:linear-gradient(135deg,var(--a),var(--a2));color:#fff;box-shadow:0 8px 18px #ff59352b;flex:1}
+.gray{background:#f0f1f3;color:#333}
+.result{display:none;margin-top:17px}.result.show{display:block}
+.status{background:#effaf4;color:#178653;border-radius:13px;padding:12px 14px;font-weight:800}
+.item{border:1px solid #e8e8e8;border-radius:14px;padding:13px;margin-top:9px}
+.head{display:flex;justify-content:space-between;font-size:14px;font-weight:800;margin-bottom:7px}
+.url{background:#f7f7f8;border-radius:10px;padding:9px;font-size:12px;line-height:1.5;word-break:break-all;color:#555}
+.copy{width:100%;margin-top:8px;background:#222;color:#fff}.done{background:#1ca064!important}
+.big{width:100%;margin-top:10px}
+.guide{margin-top:16px;border-top:1px solid #eee;padding-top:15px}
+.guide h3{font-size:16px;margin:0 0 8px}.guide ol{margin:0;padding-left:21px;color:#555;font-size:13px;line-height:1.85}
+.notice{margin-top:15px;padding:12px 14px;border-radius:12px;background:#fff7e8;color:#76541b;font-size:12px;line-height:1.65}
+.footer{text-align:center;color:#999;font-size:12px;line-height:1.7;margin-top:18px}
+@media(max-width:520px){.wrap{padding:19px 12px 40px}.card{padding:16px}h1{font-size:26px}.grid{grid-template-columns:1fr}.actions{gap:7px}}
+</style>
+</head>
+<body>
+<main class="wrap">
+<header class="brand">
+  <div class="logo">媽</div>
+  <h1>媽媽好難</h1>
+  <p class="sub">蝦皮分潤快速轉換器 V3</p>
+</header>
+
+<section class="card">
+  <label for="links">貼上蝦皮商品連結</label>
+  <textarea id="links" placeholder="每行一個蝦皮網址，最多 5 個&#10;&#10;例如：&#10;https://s.shopee.tw/xxxxx&#10;https://shopee.tw/xxxxx"></textarea>
+  <div class="hint">最多 5 個網址。整理後可一鍵複製並開啟蝦皮官方分潤頁。</div>
+
+  <div class="grid">
+    <div class="small">
+      <label for="subid">Sub ID（選填）</label>
+      <input id="subid" placeholder="例如：threads">
+    </div>
+    <div class="small">
+      <label>網址數量</label>
+      <input id="count" value="0 / 5" disabled>
+    </div>
+  </div>
+
+  <div class="actions">
+    <button class="btn primary" id="one">一鍵處理</button>
+    <button class="btn gray" id="prepare">整理</button>
+    <button class="btn gray" id="clear">清除</button>
+  </div>
+
+  <section class="result" id="result">
+    <div class="status" id="status"></div>
+    <div id="items"></div>
+
+    <button class="btn primary big" id="copyAll">📋 全部複製</button>
+    <button class="btn primary big" id="open">🚀 複製＋開啟蝦皮官方分潤頁</button>
+
+    <div class="guide">
+      <h3>到了蝦皮後只要 2 個動作</h3>
+      <ol>
+        <li>把剛才複製的網址貼到「蝦皮網頁連結」。</li>
+        <li>如需要追蹤渠道，填 Sub ID，再按「取得連結」。</li>
+      </ol>
+    </div>
+  </section>
+
+  <div class="notice">
+    V3 不需要 API，也不會要求你把蝦皮密碼或帳號憑證放進網站。真正的蝦皮分潤連結由蝦皮官方後台產生。
+  </div>
+</section>
+
+<footer class="footer">媽媽好難 · 蝦皮分潤快速工具<br>請依蝦皮聯盟計畫規範使用</footer>
+</main>
+
+<script>
+const OFFICIAL="https://affiliate.shopee.tw/offer/custom_link";
+const $=id=>document.getElementById(id);
+
+function list(){
+  return [...new Set($("links").value.split(/\n+/).map(v=>v.trim()).filter(Boolean))].slice(0,5);
+}
+function isShopee(u){
+  try{
+    const x=new URL(u), h=x.hostname.toLowerCase();
+    return h==="shopee.tw" || h.endsWith(".shopee.tw");
+  }catch(e){return false}
+}
+function esc(s){return s.replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]))}
+function update(){ $("count").value=list().length+" / 5"; }
+$("links").addEventListener("input",update);
+
+function prepare(){
+  const urls=list();
+  if(!urls.length){alert("請先貼上蝦皮網址");return false}
+  if(urls.some(u=>!isShopee(u))){alert("有網址不是蝦皮網址，請確認後再試。");return false}
+
+  $("status").textContent="✓ 已整理 "+urls.length+" 個蝦皮網址";
+  $("items").innerHTML="";
+  urls.forEach((u,i)=>{
+    const el=document.createElement("div");
+    el.className="item";
+    el.innerHTML=`<div class="head"><span>商品 ${i+1}</span><span>✓</span></div><div class="url">${esc(u)}</div><button class="btn copy">複製這個連結</button>`;
+    el.querySelector(".copy").onclick=async ev=>{
+      await navigator.clipboard.writeText(u);
+      ev.currentTarget.textContent="✓ 已複製";
+      ev.currentTarget.classList.add("done");
+      setTimeout(()=>{ev.currentTarget.textContent="複製這個連結";ev.currentTarget.classList.remove("done")},1300);
+    };
+    $("items").appendChild(el);
+  });
+  $("result").classList.add("show");
+  return true;
+}
+async function copyAll(){
+  const urls=list();
+  if(!urls.length) return false;
+  await navigator.clipboard.writeText(urls.join("\\n"));
+  return true;
+}
+$("prepare").onclick=prepare;
+$("one").onclick=async()=>{
+  if(!prepare()) return;
+  try{
+    await copyAll();
+    $("status").textContent="✓ 已整理並複製 "+list().length+" 個網址，正在開啟蝦皮官方分潤頁…";
+    setTimeout(()=>window.open(OFFICIAL,"_blank"),180);
+  }catch(e){
+    alert("瀏覽器阻擋了自動複製，請改按「全部複製」後再開啟蝦皮。");
+  }
+};
+$("copyAll").onclick=async()=>{
+  try{
+    await copyAll();
+    $("copyAll").textContent="✓ 全部已複製";
+    setTimeout(()=>$("copyAll").textContent="📋 全部複製",1400);
+  }catch(e){alert("無法自動複製，請檢查瀏覽器權限。")}
+};
+$("open").onclick=async()=>{
+  try{
+    await copyAll();
+    window.open(OFFICIAL,"_blank");
+  }catch(e){alert("請先按「全部複製」，再開啟蝦皮官方分潤頁。")}
+};
+$("clear").onclick=()=>{
+  $("links").value="";$("subid").value="";$("count").value="0 / 5";
+  $("items").innerHTML="";$("result").classList.remove("show");
+};
+</script>
+</body>
+</html>
