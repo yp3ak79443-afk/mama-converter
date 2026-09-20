@@ -1,0 +1,33 @@
+*{box-sizing:border-box}
+html,body{margin:0;min-height:100%;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Noto Sans TC","Microsoft JhengHei",sans-serif}
+body{background:#fff4ef;color:#333}
+.page{min-height:100vh;display:flex;justify-content:center;padding:34px 16px}
+.card{width:min(620px,100%);background:#fff;border-radius:22px;padding:30px 28px 36px;box-shadow:0 8px 28px rgba(224,91,61,.16)}
+.brand{display:inline-block;background:#fff0eb;color:#ee6043;border-radius:18px;padding:7px 12px;font-size:14px;font-weight:700;margin-bottom:17px}
+h1{margin:0;color:#ef5638;font-size:30px;line-height:1.25;letter-spacing:.2px}
+.subtitle{margin:10px 0 25px;color:#777;font-size:15px}
+.label{display:block;font-size:16px;font-weight:700;margin-bottom:9px}
+textarea{display:block;width:100%;height:150px;resize:vertical;min-height:150px;border:1px solid #ddd;border-radius:14px;padding:14px;font-size:15px;line-height:1.45;outline:none;color:#333;background:#fff}
+textarea:focus{border-color:#ef765d;box-shadow:0 0 0 3px rgba(239,118,93,.10)}
+.actions{display:flex;gap:10px;margin-top:22px}
+.btn{border:0;border-radius:12px;padding:12px 17px;font-size:16px;font-weight:700;cursor:pointer}
+.btn-primary{background:#f15a3a;color:#fff}
+.btn-primary:hover{background:#e94e2e}
+.btn-light{background:#f1f1f1;color:#333}
+.btn-light:hover{background:#e7e7e7}
+.line-btn{display:flex;align-items:center;justify-content:center;width:100%;height:45px;margin-top:13px;border-radius:12px;background:#06c755;color:#fff;text-decoration:none;font-size:16px;font-weight:700}
+.status{margin-top:17px;font-size:14px;color:#666}
+.result-box{margin-top:20px;border:1px solid #f0ddd6;background:#fffaf8;border-radius:15px;padding:16px}
+.result-title{font-weight:700;margin-bottom:8px}
+#results{margin:0 0 14px;padding-left:29px}
+#results li{padding:2px 0;font-size:15px;line-height:1.5;overflow-wrap:anywhere}
+#results a{color:#1717b8;text-decoration:underline}
+.copy-btn{border:0;border-radius:10px;background:#f15a3a;color:#fff;padding:9px 13px;font-size:14px;font-weight:700;cursor:pointer}
+.copy-btn:hover{background:#e94e2e}
+button:disabled{opacity:.65;cursor:wait}
+@media(max-width:520px){
+  .page{padding:18px 12px}
+  .card{padding:24px 18px 28px;border-radius:18px}
+  h1{font-size:27px}
+  textarea{height:145px}
+}
