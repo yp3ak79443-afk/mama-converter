@@ -1,0 +1,155 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#ff5b35">
+<title>媽媽好難｜蝦皮分潤連結工具 V2</title>
+<style>
+*{box-sizing:border-box}
+body{margin:0;background:linear-gradient(180deg,#fff7f3,#f7f8fa 55%,#f3f4f6);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Noto Sans TC","PingFang TC","Microsoft JhengHei",sans-serif;color:#222}
+.wrap{max-width:760px;margin:auto;padding:28px 15px 50px}
+.brand{text-align:center;margin:8px 0 22px}
+.logo{width:66px;height:66px;margin:auto;border-radius:20px;background:linear-gradient(135deg,#ff5935,#ff8b68);display:flex;align-items:center;justify-content:center;color:white;font-size:31px;font-weight:900;box-shadow:0 10px 25px #ff59352e}
+h1{font-size:29px;margin:10px 0 4px}.sub{color:#777;margin:0;font-size:14px}
+.card{background:white;border-radius:22px;padding:21px;box-shadow:0 12px 35px #0000000b;border:1px solid #00000008}
+label{display:block;font-weight:800;margin-bottom:9px}
+textarea,input{width:100%;border:1px solid #e5e5e5;border-radius:14px;padding:14px;font:inherit;outline:none}
+textarea{min-height:175px;resize:vertical;line-height:1.6}
+textarea:focus,input:focus{border-color:#ff6848;box-shadow:0 0 0 4px #ff68481a}
+.hint{font-size:12px;color:#888;margin:8px 2px 15px}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:14px}
+.small label{font-size:13px}.small input{height:46px}
+.btn{border:0;border-radius:13px;padding:13px 16px;font-weight:800;font-size:15px;cursor:pointer}
+.primary{background:linear-gradient(135deg,#ff5935,#ff805e);color:white;box-shadow:0 8px 18px #ff59352b}
+.gray{background:#f0f1f3;color:#333}
+.row{display:flex;gap:10px}.row .btn:first-child{flex:1}
+.notice{margin-top:15px;padding:13px 14px;border-radius:13px;background:#fff7e8;color:#76541b;font-size:13px;line-height:1.65}
+.result{display:none;margin-top:18px}.result.show{display:block}
+.ok{background:#effaf4;color:#188653;padding:12px 14px;border-radius:13px;font-weight:800}
+.item{margin-top:10px;border:1px solid #e8e8e8;border-radius:14px;padding:13px}
+.itemhead{display:flex;justify-content:space-between;font-weight:800;font-size:14px;margin-bottom:8px}
+.url{background:#f7f7f8;border-radius:10px;padding:9px;font-size:12px;word-break:break-all;color:#555}
+.item button{width:100%;margin-top:8px;background:#222;color:white}
+.steps{margin-top:18px;border-top:1px solid #eee;padding-top:17px}
+.steps h3{font-size:16px;margin:0 0 9px}
+.steps ol{margin:0;padding-left:21px;color:#555;font-size:13px;line-height:1.8}
+.footer{text-align:center;color:#999;font-size:12px;margin-top:18px;line-height:1.7}
+@media(max-width:520px){.wrap{padding:20px 12px 40px}h1{font-size:26px}.card{padding:17px}.grid{grid-template-columns:1fr}textarea{min-height:155px}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="brand">
+    <div class="logo">媽</div>
+    <h1>媽媽好難</h1>
+    <p class="sub">蝦皮分潤連結工具 V2</p>
+  </header>
+
+  <section class="card">
+    <label for="links">蝦皮商品連結</label>
+    <textarea id="links" placeholder="每行貼一個蝦皮網址，最多 5 個&#10;&#10;例如：&#10;https://s.shopee.tw/xxxxx&#10;https://shopee.tw/xxxxx"></textarea>
+    <div class="hint">支援一次整理最多 5 個網址。</div>
+
+    <div class="grid">
+      <div class="small">
+        <label for="subid">Sub ID（選填）</label>
+        <input id="subid" placeholder="例如：threads">
+      </div>
+      <div class="small">
+        <label>目前數量</label>
+        <input id="count" value="0 / 5" disabled>
+      </div>
+    </div>
+
+    <div class="row">
+      <button class="btn primary" id="prepare">整理連結</button>
+      <button class="btn gray" id="clear">清除</button>
+    </div>
+
+    <div class="result" id="result">
+      <div class="ok" id="status"></div>
+      <div id="items"></div>
+      <button class="btn primary" id="copyAll" style="width:100%;margin-top:11px">全部複製</button>
+      <button class="btn primary" id="openShopee" style="width:100%;margin-top:9px">複製後前往蝦皮官方自定義推廣</button>
+
+      <div class="steps">
+        <h3>接下來在蝦皮官方後台</h3>
+        <ol>
+          <li>上方按鈕會先複製整理好的商品網址。</li>
+          <li>開啟蝦皮「自定義推廣」頁面。</li>
+          <li>登入你的蝦皮分潤帳號。</li>
+          <li>把網址貼到「蝦皮網頁連結」欄位。</li>
+          <li>如需追蹤渠道，可填 Sub ID，再按「取得連結」。</li>
+        </ol>
+      </div>
+    </div>
+
+    <div class="notice">
+      這個 V2 不會假裝自己能直接產生蝦皮官方分潤短網址；真正的分潤連結仍由蝦皮官方後台產生。這樣可以避免把帳號密鑰放在公開網頁，也不會冒用非官方 API。
+    </div>
+  </section>
+
+  <div class="footer">媽媽好難 · 蝦皮分潤連結工具<br>依蝦皮分潤計畫規範使用</div>
+</div>
+
+<script>
+const OFFICIAL_URL="https://affiliate.shopee.tw/offer/custom_link";
+const $=id=>document.getElementById(id);
+
+function getList(){
+  return [...new Set($("links").value.split(/\n+/).map(x=>x.trim()).filter(Boolean))].slice(0,5);
+}
+function valid(u){
+  try{
+    const x=new URL(u),h=x.hostname.toLowerCase();
+    return h==="shopee.tw" || h.endsWith(".shopee.tw");
+  }catch(e){return false}
+}
+function esc(s){return s.replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]))}
+function updateCount(){$("count").value=getList().length+" / 5"}
+$("links").addEventListener("input",updateCount);
+
+$("prepare").onclick=()=>{
+  const list=getList();
+  if(!list.length){alert("請先貼上蝦皮網址");return}
+  if(list.some(x=>!valid(x))){alert("偵測到不是蝦皮網址，請確認每一行都是蝦皮連結。");return}
+
+  $("status").textContent="✓ 已整理 "+list.length+" 個蝦皮網址";
+  $("items").innerHTML="";
+  list.forEach((url,i)=>{
+    const d=document.createElement("div");
+    d.className="item";
+    d.innerHTML=`<div class="itemhead"><span>商品連結 ${i+1}</span><span>✓</span></div>
+      <div class="url">${esc(url)}</div>
+      <button class="btn copyOne">複製這個連結</button>`;
+    d.querySelector(".copyOne").onclick=async e=>{
+      await navigator.clipboard.writeText(url);
+      e.currentTarget.textContent="✓ 已複製";
+      setTimeout(()=>e.currentTarget.textContent="複製這個連結",1200);
+    };
+    $("items").appendChild(d);
+  });
+  $("result").classList.add("show");
+};
+
+async function copyAll(){
+  const list=getList();
+  await navigator.clipboard.writeText(list.join("\n"));
+}
+$("copyAll").onclick=async()=>{
+  await copyAll(); $("copyAll").textContent="✓ 全部已複製";
+  setTimeout(()=>$("copyAll").textContent="全部複製",1400);
+};
+$("openShopee").onclick=async()=>{
+  const list=getList();
+  await navigator.clipboard.writeText(list.join("\n"));
+  window.open(OFFICIAL_URL,"_blank");
+};
+$("clear").onclick=()=>{
+  $("links").value="";$("subid").value="";$("count").value="0 / 5";
+  $("items").innerHTML="";$("result").classList.remove("show");
+};
+</script>
+</body>
+</html>
